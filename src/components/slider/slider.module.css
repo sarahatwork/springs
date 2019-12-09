@@ -1,10 +1,15 @@
 .wrapper {
   width: 500px;
   height: 333px;
+  display: flex;
   overflow: hidden;
   margin: 50px auto;
 }
 
-.imgWrapper:first-child {
-  display: none;
+/* .wrapper > div {
+  position: absolute;
+} */
+
+.wrapper img {
+  pointer-events: none;
 }
