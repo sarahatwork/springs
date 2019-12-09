@@ -1,24 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
+
+import Slider from './components/slider';
+
 import './App.css';
+
+import chi1 from './chi1.jpeg'
+import chi2 from './chi2.jpeg'
+import chi3 from './chi3.jpeg'
+
+const IMAGES = [
+  {
+    src: chi1,
+    alt: 'chi1'
+  },
+  {
+    src: chi2,
+    alt: 'chi2'
+  },
+  {
+    src: chi3,
+    alt: 'chi3'
+  }
+]
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     <Slider images={IMAGES} />
     </div>
   );
 }
