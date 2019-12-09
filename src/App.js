@@ -2,8 +2,6 @@ import React from 'react';
 
 import Slider from './components/slider';
 
-import './App.css';
-
 import chi1 from './chi1.jpeg'
 import chi2 from './chi2.jpeg'
 import chi3 from './chi3.jpeg'
@@ -25,9 +23,7 @@ const IMAGES = [
 
 function App() {
   return (
-    <div className="App">
      <Slider images={IMAGES} />
-    </div>
   );
 }
 

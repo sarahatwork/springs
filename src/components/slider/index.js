@@ -1,10 +1,14 @@
 import React from 'react';
 
+import s from './slider.module.css'
+
 function Slider({ images }) {
   return (
-    <div>
+    <div className={s.wrapper}>
       {images.map(({ src, alt}) => (
-        <img src={src} key={src} alt={alt} />
+        <div className={s.imgWrapper}>
+          <img src={src} key={src} alt={alt} />
+        </div>
       ))}
     </div>
   )
