@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useSprings, animated, interpolate } from 'react-spring';
 import { useDrag } from 'react-use-gesture';
 
 import s from './deck.module.css';
+
+// https://codesandbox.io/embed/j0y0vpz59
 
 const CARDS = [
   'https://upload.wikimedia.org/wikipedia/en/f/f5/RWS_Tarot_08_Strength.jpg',
@@ -19,21 +21,43 @@ const to = i => ({
   rot: -10 + Math.random() * 20,
   delay: i * 100
 });
-const from = i => ({ x: 0, y: 0, rot: 0 });
+const from = i => ({ x: 0, y: -1000, rot: 0 });
 
 function Deck({ cards = CARDS }) {
+  const gone = useRef([]);
   const [springs, set] = useSprings(cards.length, i => ({
     ...to(i),
     from: from(i)
   }));
 
-  const bind = useDrag(({ args: [index], movement: [mx], down }) => {
-    set(i => {
-      if (index !== i) return;
-      const x = down ? mx : 0;
-      return { x };
-    });
-  });
+  const bind = useDrag(
+    ({ args: [index], movement: [mx], direction: [xDir], down, velocity }) => {
+      if (velocity > 0.2 && !down) {
+        gone.current.push(index);
+      }
+      const dir = xDir < 0 ? -1 : 1;
+
+      set(i => {
+        if (index !== i) return;
+
+        const isGone = gone.current.includes(i);
+        let x;
+        if (isGone) {
+          x = (200 + window.innerWidth) * dir;
+        } else {
+          x = down ? mx : 0;
+        }
+
+        return { x, config: { friction: 50 } };
+      });
+      if (!down && gone.current.length === cards.length) {
+        setTimeout(() => {
+          gone.current = [];
+          set(i => to(i));
+        }, 600);
+      }
+    }
+  );
 
   return (
     <div className={s.wrapper}>
