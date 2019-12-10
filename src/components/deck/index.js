@@ -22,10 +22,19 @@ const to = i => ({
 const from = i => ({ x: 0, y: 0, rot: 0 });
 
 function Deck({ cards = CARDS }) {
-  const [springs] = useSprings(cards.length, i => ({
+  const [springs, set] = useSprings(cards.length, i => ({
     ...to(i),
     from: from(i)
   }));
+
+  const bind = useDrag(({ args: [index], movement: [mx], down }) => {
+    set(i => {
+      if (index !== i) return;
+      const x = down ? mx : 0;
+      return { x };
+    });
+  });
+
   return (
     <div className={s.wrapper}>
       {springs.map(({ x, y, rot }, i) => {
@@ -33,6 +42,7 @@ function Deck({ cards = CARDS }) {
           <animated.div
             key={i}
             className={s.cardWrapper}
+            {...bind(i)}
             style={{
               transform: interpolate(
                 [x, y, rot],
@@ -41,7 +51,7 @@ function Deck({ cards = CARDS }) {
               )
             }}
           >
-            <img src={cards[i]} alt="cart" />
+            <span style={{ backgroundImage: `url(${cards[i]})` }} />
           </animated.div>
         );
       })}
