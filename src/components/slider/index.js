@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useSprings, animated } from 'react-spring';
+import { interpolate, useSprings, animated } from 'react-spring';
 import { useDrag } from 'react-use-gesture';
 import clamp from 'just-clamp';
 
@@ -40,14 +40,13 @@ function Slider({ images }) {
             key={src}
             style={{
               display,
-              transform: x.interpolate(x => `translate3d(${x}px,0,0)`)
+              transform: interpolate(
+                [x, scale],
+                (x, s) => `translate3d(${x}px,0,0) scale(${s})`
+              )
             }}
           >
-            <animated.img
-              style={{ transform: scale.interpolate(s => `scale(${s})`) }}
-              src={src}
-              alt={alt}
-            />
+            <img src={src} alt={alt} />
           </animated.div>
         );
       })}
