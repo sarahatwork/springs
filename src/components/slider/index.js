@@ -5,6 +5,8 @@ import clamp from 'just-clamp';
 
 import s from './slider.module.css';
 
+// https://codesandbox.io/embed/n9vo1my91p
+
 function Slider({ images }) {
   const index = useRef(0);
   const bind = useDrag(
@@ -18,7 +20,8 @@ function Slider({ images }) {
           return { display: 'none' };
         }
         const x = (i - index.current) * 500 + (down ? mx : 0);
-        return { display: 'block', scale: down ? 1 : 1, x };
+        const scale = down ? 1 - distance / (500 * 2) : 1;
+        return { display: 'block', scale, x };
       });
     }
   );
@@ -28,15 +31,12 @@ function Slider({ images }) {
     display: 'block'
   }));
 
-  console.log(springs);
-
   return (
     <div {...bind()} className={s.wrapper}>
       {springs.map(({ display, scale, x }, i) => {
         const { src, alt } = images[i];
         return (
           <animated.div
-            className={s.imgWrapper}
             key={src}
             style={{
               display,

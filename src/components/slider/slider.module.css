@@ -5,6 +5,7 @@
   overflow: hidden;
   margin: 50px auto;
   position: relative;
+  background-color: #eee;
 }
 
 .wrapper > div {
