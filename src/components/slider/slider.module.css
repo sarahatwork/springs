@@ -4,11 +4,12 @@
   display: flex;
   overflow: hidden;
   margin: 50px auto;
+  position: relative;
 }
 
-/* .wrapper > div {
+.wrapper > div {
   position: absolute;
-} */
+}
 
 .wrapper img {
   pointer-events: none;

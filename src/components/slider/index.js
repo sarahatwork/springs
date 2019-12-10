@@ -14,14 +14,17 @@ function Slider({ images }) {
         cancel((index.current = clamp(newIndex, 0, images.length - 1)));
       }
       set(i => {
-        const x = i - index.current * 500 + (down ? mx : 0);
-        return { scale: down ? 1 : 1, x };
+        if (i < index.current - 1 || i > index.current + 1) {
+          return { display: 'none' };
+        }
+        const x = (i - index.current) * 500 + (down ? mx : 0);
+        return { display: 'block', scale: down ? 1 : 1, x };
       });
     }
   );
   const [springs, set] = useSprings(images.length, i => ({
     scale: 1,
-    x: 0,
+    x: i * 500,
     display: 'block'
   }));
 
