@@ -3,11 +3,30 @@ import { interpolate, useSprings, animated } from 'react-spring';
 import { useDrag } from 'react-use-gesture';
 import clamp from 'just-clamp';
 
+import chi1 from '../../chi1.jpeg';
+import chi2 from '../../chi2.jpeg';
+import chi3 from '../../chi3.jpeg';
+
 import s from './slider.module.css';
 
 // https://codesandbox.io/embed/n9vo1my91p
 
-function Slider({ images }) {
+const IMAGES = [
+  {
+    src: chi1,
+    alt: 'chi1'
+  },
+  {
+    src: chi2,
+    alt: 'chi2'
+  },
+  {
+    src: chi3,
+    alt: 'chi3'
+  }
+];
+
+function Slider({ images = IMAGES }) {
   const index = useRef(0);
   const bind = useDrag(
     ({ down, movement: [mx], direction: [xDir], distance, cancel }) => {
