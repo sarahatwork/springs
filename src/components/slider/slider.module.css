@@ -1,0 +1,18 @@
+.wrapper {
+  width: 500px;
+  height: 333px;
+  display: flex;
+  overflow: hidden;
+  margin: 50px auto;
+  position: relative;
+  background-color: #eee;
+  cursor: pointer;
+}
+
+.wrapper > div {
+  position: absolute;
+}
+
+.wrapper img {
+  pointer-events: none;
+}
